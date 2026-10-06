@@ -1,0 +1,20 @@
+name: ehr-fabric
+version: "2.0.0"
+caliper:
+  blockchain: fabric
+channels:
+  - channelName: ${CHANNEL}
+    contracts:
+      - id: ${CC_NAME}
+organizations:
+  - mspid: Org1MSP
+    identities:
+      certificates:
+        - name: User1
+          clientPrivateKey:
+            path: ${ORG1_KEY}
+          clientSignedCert:
+            path: ${ORG1_CERT}
+    connectionProfile:
+      path: ${ORG1_CCP}
+      discover: true

@@ -1,0 +1,70 @@
+name: fabric-ehr-experiments
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "smoke (1 block level, 1 rep) or full (4 block levels, 5 reps)"
+        default: "smoke"
+        type: choice
+        options: [smoke, full]
+jobs:
+  run:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      matrix:
+        block: [10, 50, 100, 250]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: "1.22.8" }
+      - uses: actions/setup-node@v4
+        with: { node-version: "18" }
+      - name: Skip non-smoke block levels in smoke mode
+        id: gate
+        run: |
+          if [ "${{ inputs.mode }}" = "smoke" ] && [ "${{ matrix.block }}" != "10" ]; then echo "skip=1" >> $GITHUB_OUTPUT; fi
+      - name: Install Fabric 2.5.15 (pinned fabric-samples)
+        if: steps.gate.outputs.skip != '1'
+        run: |
+          mkdir -p $HOME/ehr-fabric && cd $HOME/ehr-fabric
+          git clone https://github.com/hyperledger/fabric-samples.git
+          (cd fabric-samples && git checkout 5789681b4f4d24e58fa40f19a69f5496892374b6)
+          curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh
+          chmod +x install-fabric.sh
+          ./install-fabric.sh --fabric-version 2.5.15 docker binary
+          cp -r bin config fabric-samples/ 2>/dev/null || true
+          fabric-samples/bin/peer version | head -3
+          ln -s "$GITHUB_WORKSPACE" $HOME/ehr-kit
+      - name: Prepare chaincode and Caliper
+        if: steps.gate.outputs.skip != '1'
+        run: |
+          (cd chaincode/ehr && go mod tidy)
+          (cd caliper && npm install --no-audit --no-fund && npx caliper bind --caliper-bind-sut fabric:2.2)
+          sudo apt-get install -y gettext-base jq >/dev/null
+      - name: Configure run
+        if: steps.gate.outputs.skip != '1'
+        run: |
+          sed -i 's/^BLOCK_MSG_LEVELS=.*/BLOCK_MSG_LEVELS="${{ matrix.block }}"/' experiment.env
+          if [ "${{ inputs.mode }}" = "smoke" ]; then
+            sed -i 's/^CLIENT_LEVELS=.*/CLIENT_LEVELS="10"/; s/^REPS=.*/REPS=1/; s/^TX_DURATION=.*/TX_DURATION=20/; s/^PRELOAD_PER_WORKER=.*/PRELOAD_PER_WORKER=20/' experiment.env
+          fi
+          cat experiment.env
+      - name: Record environment
+        if: steps.gate.outputs.skip != '1'
+        run: |
+          { echo "runner: $(nproc) vCPU, $(free -g | awk '/Mem/{print $2}') GB RAM"; docker version --format 'docker {{.Server.Version}}'; go version; node -v; } | tee env_runner.txt
+      - name: Run experiments
+        if: steps.gate.outputs.skip != '1'
+        run: ./scripts/run_experiments.sh b${{ matrix.block }}
+      - name: Analyse
+        if: always() && steps.gate.outputs.skip != '1'
+        run: python3 scripts/analyze.py results/b${{ matrix.block }} || true
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.gate.outputs.skip != '1'
+        with:
+          name: results-block-${{ matrix.block }}
+          path: |
+            results/
+            env_runner.txt

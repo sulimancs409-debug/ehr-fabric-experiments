@@ -1,0 +1,6 @@
+results/
+node_modules/
+vendor/
+caliper/networks/networkConfig.yaml
+caliper/benchmarks/config.yaml
+chaincode/ehr/ehr

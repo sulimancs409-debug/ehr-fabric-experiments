@@ -1,0 +1,29 @@
+test:
+  name: ehr-anchor-benchmark
+  description: Hash-anchor write and read workload
+  workers:
+    number: ${WORKERS}
+  rounds:
+    - label: write
+      txDuration: ${TX_DURATION}
+      rateControl:
+        type: fixed-load
+        opts:
+          transactionLoad: ${LOAD_PER_WORKER}
+      workload:
+        module: workload/createRecord.js
+        arguments:
+          runId: ${RUN_ID}
+          resultsDir: ${RESULTS_DIR}
+    - label: read
+      txDuration: ${TX_DURATION}
+      rateControl:
+        type: fixed-load
+        opts:
+          transactionLoad: ${LOAD_PER_WORKER}
+      workload:
+        module: workload/readRecord.js
+        arguments:
+          runId: ${RUN_ID}
+          resultsDir: ${RESULTS_DIR}
+          preload: ${PRELOAD_PER_WORKER}
