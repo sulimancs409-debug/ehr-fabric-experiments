@@ -1,0 +1,62 @@
+name: fabric-ehr-ablation
+# Block size fixed at 100 msgs. Each job changes ONE or TWO design/config factors so that the
+# effect on write throughput/latency can be attributed. All results are reported, good or bad.
+on:
+  workflow_dispatch:
+jobs:
+  run:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: base_couch_majority_500ms,   db: couchdb, ep: "",                                   timeout: 500ms }
+          - { name: leveldb_majority_500ms,      db: leveldb, ep: "",                                   timeout: 500ms }
+          - { name: couch_anyorg_500ms,          db: couchdb, ep: "OR('Org1MSP.peer','Org2MSP.peer')", timeout: 500ms }
+          - { name: leveldb_anyorg_500ms,        db: leveldb, ep: "OR('Org1MSP.peer','Org2MSP.peer')", timeout: 500ms }
+          - { name: couch_majority_100ms,        db: couchdb, ep: "",                                   timeout: 100ms }
+          - { name: leveldb_anyorg_100ms,        db: leveldb, ep: "OR('Org1MSP.peer','Org2MSP.peer')", timeout: 100ms }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: "1.22.8", cache: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: "18" }
+      - name: Install Fabric 2.5.15 (pinned fabric-samples)
+        run: |
+          mkdir -p $HOME/ehr-fabric && cd $HOME/ehr-fabric
+          git clone https://github.com/hyperledger/fabric-samples.git
+          (cd fabric-samples && git checkout 5789681b4f4d24e58fa40f19a69f5496892374b6)
+          curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh
+          chmod +x install-fabric.sh
+          ./install-fabric.sh --fabric-version 2.5.15 docker binary
+          cp -r bin config fabric-samples/ 2>/dev/null || true
+          fabric-samples/bin/peer version | head -3
+          ln -s "$GITHUB_WORKSPACE" $HOME/ehr-kit
+      - name: Prepare chaincode and Caliper
+        run: |
+          (cd chaincode/ehr && go mod tidy)
+          (cd caliper && npm install --no-audit --no-fund && npx caliper bind --caliper-bind-sut fabric:2.2)
+          sudo apt-get install -y gettext-base jq >/dev/null
+      - name: Configure run
+        run: |
+          sed -i 's/^BLOCK_MSG_LEVELS=.*/BLOCK_MSG_LEVELS="100"/; s/^CLIENT_LEVELS=.*/CLIENT_LEVELS="50 100 200 400"/; s/^WORKERS=[0-9]*/WORKERS=4/; s/^REPS=[0-9]*/REPS=3/; s/^BATCH_TIMEOUT=.*/BATCH_TIMEOUT="${{ matrix.timeout }}"/' experiment.env
+          echo "STATE_DB=${{ matrix.db }}" >> $GITHUB_ENV
+          echo "ENDORSE_POLICY=${{ matrix.ep }}" >> $GITHUB_ENV
+          cat experiment.env | grep -vE "^#|^$"
+      - name: Record environment
+        run: |
+          { echo "config: ${{ matrix.name }}"; echo "state_db=${{ matrix.db }} endorse_policy='${{ matrix.ep }}' batch_timeout=${{ matrix.timeout }}"; echo "runner: $(nproc) vCPU, $(free -g | awk '/Mem/{print $2}') GB RAM"; docker version --format 'docker {{.Server.Version}}'; go version; node -v; } | tee env_runner.txt
+      - name: Run experiments
+        run: ./scripts/run_experiments.sh ${{ matrix.name }}
+      - name: Analyse
+        if: always()
+        run: python3 scripts/analyze.py results/${{ matrix.name }} || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ablation-${{ matrix.name }}
+          path: |
+            results/
+            env_runner.txt

@@ -93,22 +93,39 @@ for b, c in sorted({(r["block"], r["clients"]) for r in summary}):
                  f"{pm(rd,'tps')} | {pm(rd,'lat_mean')} | {pm(rd,'lat_p95')} | {pm(rd,'success_pct',1)} |")
 with open(os.path.join(root, "table1.md"), "w") as fh: fh.write("\n".join(lines) + "\n")
 
-# container resource snapshots (docker stats taken after each run)
+# resource use sampled DURING each round (resources_ts.csv: ts_ms,name,cpu%,mem). Each sample is
+# assigned to the write or read round by the time window of that round's per-transaction log.
 def tomib(s):
     m = re.match(r"([\d.]+)\s*([KMG]i?B)", s.strip())
-    if not m: return float("nan")
+    if not m: return 0.0
     v, u = float(m.group(1)), m.group(2)
     return v * {"KiB": 1/1024, "KB": 1/1024, "MiB": 1, "MB": 1, "GiB": 1024, "GB": 1024}[u]
+def short(n):
+    for k in ("peer0.org1", "peer0.org2", "orderer", "couchdb0", "couchdb1", "HOST"):
+        if n.startswith(k) or n == k: return k
+    return "chaincode" if n.startswith("dev-") else n
 res = defaultdict(lambda: {"cpu": [], "mem": []})
-for f in glob.glob(os.path.join(root, "b*", "c*", "rep*", "docker_stats.csv")):
-    m = re.search(r"b(\d+)[/\\]c(\d+)[/\\]", f)
+for f in glob.glob(os.path.join(root, "b*", "c*", "rep*", "resources_ts.csv")):
+    m = re.search(r"b(\d+)[/\\]c(\d+)[/\\]", f); d = os.path.dirname(f)
+    win = {}
+    for op in ("write", "read"):
+        S, E = [], []
+        for jf in glob.glob(os.path.join(d, op + "_w*.jsonl")):
+            for line in open(jf):
+                try: o = json.loads(line); S.append(o["s"]); E.append(o["e"])
+                except Exception: pass
+        if S: win[op] = (min(S), max(E))
     with open(f) as fh:
         for row in csv.reader(fh):
-            if len(row) < 3: continue
-            key = (int(m.group(1)), int(m.group(2)), row[0])
-            res[key]["cpu"].append(float(row[1].strip("%") or 0))
-            res[key]["mem"].append(tomib(row[2].split("/")[0]))
-rrows = [dict(block=b, clients=c, container=n, cpu_pct_mean=st.mean(v["cpu"]), mem_mib_mean=st.mean(v["mem"]), n=len(v["cpu"]))
-         for (b, c, n), v in sorted(res.items())]
+            if len(row) < 4: continue
+            try: ts = int(row[0]); cpu = float(row[2].strip("%") or 0)
+            except ValueError: continue
+            for op, (lo, hi) in win.items():
+                if lo <= ts <= hi:
+                    key = (int(m.group(1)), int(m.group(2)), op, short(row[1]))
+                    res[key]["cpu"].append(cpu); res[key]["mem"].append(tomib(row[3].split("/")[0]))
+rrows = [dict(block=b, clients=c, op=o, container=n, cpu_pct_mean=st.mean(v["cpu"]), cpu_pct_max=max(v["cpu"]),
+              mem_mib_mean=st.mean(v["mem"]), samples=len(v["cpu"]))
+         for (b, c, o, n), v in sorted(res.items())]
 write_csv("resources.csv", rrows)
 print(f"{len(runs)} run-rounds analysed; wrote summary.csv, summary_runs.csv, failures.csv, resources.csv, table1.md in {root}")
