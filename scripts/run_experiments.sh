@@ -82,20 +82,22 @@ run_caliper() {  # $1=block $2=clients $3=rep
   return $rc
 }
 
+FAILED=0
 trap 'log "interrupted, cleaning up"; cleanup_network; exit 130' INT TERM
 log "Results in $OUT"
 for B in $BLOCK_MSG_LEVELS; do
   log "=== Block level MaxMessageCount=$B ==="
   cleanup_network
-  start_network "$B" || { log "skip block level $B"; continue; }
+  start_network "$B" || { log "skip block level $B"; FAILED=1; continue; }
   gen_network_config
   for C in $CLIENT_LEVELS; do
     for R in $(seq 1 "$REPS"); do
       log "block=$B clients=$C rep=$R"
-      run_caliper "$B" "$C" "$R" || log "caliper returned non-zero (kept data)"
+      run_caliper "$B" "$C" "$R" || { log "caliper returned non-zero (kept data)"; FAILED=1; }
       sleep "$COOLDOWN"
     done
   done
 done
 cleanup_network
 log "DONE. Next: python3 $HERE/scripts/analyze.py $OUT"
+[ "$FAILED" -eq 0 ] || { log "FINISHED WITH FAILURES"; exit 1; }
