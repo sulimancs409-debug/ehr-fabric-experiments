@@ -4,6 +4,7 @@
 set -uo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 source "$HERE/experiment.env"
+LOAD_MODE="${LOAD_MODE:-load}"
 STATE_DB="${STATE_DB:-couchdb}"; ENDORSE_POLICY="${ENDORSE_POLICY:-}"
 DBFLAG=""; [ "$STATE_DB" = "couchdb" ] && DBFLAG="-s couchdb"
 CCEP_ARGS=(); [ -n "$ENDORSE_POLICY" ] && CCEP_ARGS=(-ccep "$ENDORSE_POLICY")
@@ -11,6 +12,7 @@ STAMP="${1:-run_$(date +%Y%m%d_%H%M%S)}"
 OUT="$HERE/results/$STAMP"
 mkdir -p "$OUT"
 cp "$HERE/experiment.env" "$OUT/experiment.env"
+echo "LOAD_MODE=${LOAD_MODE:-load}" >>"$OUT/experiment.env"
 
 CFG="$TEST_NETWORK/configtx/configtx.yaml"
 [ -f "$CFG.orig" ] || cp "$CFG" "$CFG.orig"
@@ -87,6 +89,8 @@ run_caliper() {  # $1=block $2=clients $3=rep
   export RESULTS_DIR="$OUT/b$1/c$2/rep$3"
   export WORKERS TX_DURATION PRELOAD_PER_WORKER
   export LOAD_PER_WORKER=$(( $2 / WORKERS ))
+  if [ "$LOAD_MODE" = "rate" ]; then export RATE_TYPE=fixed-rate RATE_KEY=tps RATE_VAL="$2"
+  else export RATE_TYPE=fixed-load RATE_KEY=transactionLoad RATE_VAL="$LOAD_PER_WORKER"; fi
   mkdir -p "$RESULTS_DIR"
   envsubst < "$HERE/caliper/benchmarks/config.template.yaml" > "$HERE/caliper/benchmarks/config.yaml"
   cp "$HERE/caliper/benchmarks/config.yaml" "$RESULTS_DIR/config.yaml"

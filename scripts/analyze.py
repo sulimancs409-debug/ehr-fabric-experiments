@@ -84,12 +84,18 @@ def pm(row, k, d=0):
     s = "n/a" if math.isnan(sd) else f"{sd:.{d}f}"
     return f"{row[k + '_mean']:.{d}f} ± {s}"
 idx = {(r["block"], r["clients"], r["op"]): r for r in summary}
-lines = ["| Block (max msgs) | Clients | Write TPS | Write latency mean (ms) | Write P95 (ms) | Write success (%) | Read TPS | Read latency mean (ms) | Read P95 (ms) | Read success (%) |",
-         "|---|---|---|---|---|---|---|---|---|---|"]
+_lm = "load"
+try:
+    for _l in open(os.path.join(root, "experiment.env")):
+        if _l.startswith("LOAD_MODE="): _lm = _l.strip().split("=")[1]
+except Exception: pass
+_lab = "Offered load (TPS)" if _lm == "rate" else "Clients (nominal)"
+lines = [f"| Block (max msgs) | {_lab} | Write TPS | Write latency mean (ms) | Write P50 (ms) | Write P95 (ms) | Write P99 (ms) | Write success (%) | Read TPS | Read latency mean (ms) | Read P95 (ms) | Read success (%) |",
+         "|---|---|---|---|---|---|---|---|---|---|---|---|"]
 for b, c in sorted({(r["block"], r["clients"]) for r in summary}):
     w, rd = idx.get((b, c, "write")), idx.get((b, c, "read"))
     if not w or not rd: continue
-    lines.append(f"| {b} | {c} | {pm(w,'tps')} | {pm(w,'lat_mean')} | {pm(w,'lat_p95')} | {pm(w,'success_pct',1)} | "
+    lines.append(f"| {b} | {c} | {pm(w,'tps')} | {pm(w,'lat_mean')} | {pm(w,'lat_p50')} | {pm(w,'lat_p95')} | {pm(w,'lat_p99')} | {pm(w,'success_pct',1)} | "
                  f"{pm(rd,'tps')} | {pm(rd,'lat_mean')} | {pm(rd,'lat_p95')} | {pm(rd,'success_pct',1)} |")
 with open(os.path.join(root, "table1.md"), "w") as fh: fh.write("\n".join(lines) + "\n")
 

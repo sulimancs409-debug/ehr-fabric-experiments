@@ -7,9 +7,9 @@ test:
     - label: write
       txDuration: ${TX_DURATION}
       rateControl:
-        type: fixed-load
+        type: ${RATE_TYPE}
         opts:
-          transactionLoad: ${LOAD_PER_WORKER}
+          ${RATE_KEY}: ${RATE_VAL}
       workload:
         module: workload/createRecord.js
         arguments:
@@ -18,9 +18,9 @@ test:
     - label: read
       txDuration: ${TX_DURATION}
       rateControl:
-        type: fixed-load
+        type: ${RATE_TYPE}
         opts:
-          transactionLoad: ${LOAD_PER_WORKER}
+          ${RATE_KEY}: ${RATE_VAL}
       workload:
         module: workload/readRecord.js
         arguments:
