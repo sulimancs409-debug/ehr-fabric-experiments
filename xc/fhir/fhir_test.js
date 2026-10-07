@@ -23,7 +23,7 @@ function call(method, p, token, body, raw) {
 const rnd = n => crypto.randomInt(n);
 const mk = {
   Patient: () => ({ resourceType: 'Patient', active: true, name: [{ family: 'Family' + rnd(1e4), given: ['Given' + rnd(1e4)] }], gender: ['male', 'female', 'other', 'unknown'][rnd(4)], birthDate: `19${50 + rnd(50)}-0${1 + rnd(9)}-1${rnd(9)}` }),
-  Observation: () => ({ resourceType: 'Observation', status: 'final', code: { coding: [{ system: 'http://loinc.org', code: '8867-4', display: 'Heart rate' }] }, subject: { reference: 'Patient/example' },
+  Observation: () => ({ resourceType: 'Observation', status: 'final', category: [{ coding: [{ system: 'http://terminology.hl7.org/CodeSystem/observation-category', code: 'vital-signs', display: 'Vital Signs' }] }], code: { coding: [{ system: 'http://loinc.org', code: '8867-4', display: 'Heart rate' }] }, subject: { reference: 'Patient/example' },
     effectiveDateTime: new Date().toISOString(), valueQuantity: { value: 50 + rnd(60), unit: 'beats/minute', system: 'http://unitsofmeasure.org', code: '/min' } }),
   DocumentReference: () => ({ resourceType: 'DocumentReference', status: 'current', type: { coding: [{ system: 'http://loinc.org', code: '18748-4', display: 'Diagnostic imaging study' }] }, subject: { reference: 'Patient/example' },
     content: [{ attachment: { contentType: 'application/pdf', url: 'urn:uuid:' + crypto.randomUUID(), title: 'Imaging report' } }] })

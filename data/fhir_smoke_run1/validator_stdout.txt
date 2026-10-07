@@ -1,0 +1,94 @@
+FHIR Validation tool Version 7.0.0 (Git# 37795f3f571f). Built 2026-10-06T19:02:34.858Z (10 hours old)
+  Java:   17.0.20.1 from /usr/lib/jvm/temurin-17-jdk-amd64 on amd64 (64bit). 3998MB available
+  Paths:  Current = /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/xc, Package Cache = /home/runner/.fhir/packages
+  Params: /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip -version 4.0.1 -tx n/a -output /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/validator_output.json
+  Locale: /
+  Jurisdiction: None specified (locale = )
+  Note that exceptions and validation failures may happen in the absence of a locale
+Loading
+  Loading FHIR v4.0.1 from hl7.fhir.r4.core#4.0.1
+Installing hl7.fhir.r4.core#4.0.1 to the package cache
+  Fetching:
+
+Installing hl7.fhir.r4.core#4.0.1
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.fhir.r4.core#4.0.1
+Installing hl7.fhir.xver-extensions#0.1.0 to the package cache
+  Fetching:
+
+Installing hl7.fhir.xver-extensions#0.1.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.fhir.xver-extensions#0.1.0
+Installing hl7.terminology.r4#6.2.0 to the package cache
+  Fetching:
+
+Installing hl7.terminology.r4#6.2.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.terminology.r4#6.2.0
+  Load hl7.terminology.r4#6.2.0 - 4288 resources (00:12.296)
+Installing hl7.fhir.uv.extensions.r4#5.2.0 to the package cache
+  Fetching:
+
+Installing hl7.fhir.uv.extensions.r4#5.2.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.fhir.uv.extensions.r4#5.2.0
+  Load hl7.fhir.uv.extensions.r4#5.2.0 - 759 resources (00:01.942)
+  Loaded FHIR - 8265 resources (00:00.000)
+  Terminology Cache at /tmp/default-tx-cache/r4
+  Terminology server null - Version n/a: No Terminology Server (00:00.011)
+Installing hl7.terminology#7.4.0 to the package cache
+  Fetching:
+
+Installing hl7.terminology#7.4.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.terminology#7.4.0
+  Load hl7.terminology#7.4.0 - 4181 resources (00:01.784)
+Installing hl7.fhir.uv.extensions#5.3.0 to the package cache
+  Fetching:
+
+Installing hl7.fhir.uv.extensions#5.3.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.fhir.uv.extensions#5.3.0
+Installing hl7.terminology.r5#7.1.0 to the package cache
+  Fetching:
+
+Installing hl7.terminology.r5#7.1.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.terminology.r5#7.1.0
+Installing hl7.fhir.uv.extensions.r5#5.2.0 to the package cache
+  Fetching:
+
+Installing hl7.fhir.uv.extensions.r5#5.2.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.fhir.uv.extensions.r5#5.2.0
+  Load hl7.fhir.uv.extensions.r5#5.2.0 - 759 resources (00:02.040)
+  Load hl7.terminology.r5#7.1.0 - 4072 resources (00:00.074)
+  Load hl7.fhir.uv.extensions#5.3.0 - 856 resources (00:00.569)
+  Package Summary: [hl7.fhir.r4.core#4.0.1, hl7.fhir.xver-extensions#0.1.0, hl7.terminology.r4#6.2.0, hl7.fhir.uv.extensions.r4#5.2.0, hl7.terminology#7.4.0, hl7.fhir.uv.extensions.r5#5.2.0, hl7.terminology.r5#7.1.0, hl7.fhir.uv.extensions#5.3.0]
+  Get set... 
+  ...go! (00:03.384)
+Cached new session. Cache size = 1
+Sources to validate: /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip
+Validating
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_0.json
+ 00:00.433
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_0.json
+ 00:00.056
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_1.json
+ 00:00.059
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_0.json
+ 00:00.036
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_2.json
+ 00:00.040
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_2.json
+ 00:00.039
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_1.json
+ 00:00.032
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_1.json
+ 00:00.026
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_2.json
+ 00:00.025
+Done. Times: Loading: 00:22.186, validation: 00:00.753 (#9). Memory = 1Gb
+
+Done. Times: Loading: 00:22.186, validation: 00:00.753 (#9). Max Memory = 3Gb
+

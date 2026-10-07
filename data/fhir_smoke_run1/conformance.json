@@ -1,0 +1,28 @@
+{
+  "Patient": {
+    "attempted": 3,
+    "created": 3,
+    "read_ok": 3,
+    "byte_identical_roundtrip": 3
+  },
+  "Observation": {
+    "attempted": 3,
+    "created": 3,
+    "read_ok": 3,
+    "byte_identical_roundtrip": 3
+  },
+  "DocumentReference": {
+    "attempted": 3,
+    "created": 3,
+    "read_ok": 3,
+    "byte_identical_roundtrip": 3
+  },
+  "_validator": {
+    "resources_validated": 9,
+    "resources_with_errors": 3,
+    "errors": 6,
+    "warnings": 15,
+    "fhir_version": "4.0.1",
+    "terminology": "disabled (-tx n/a)"
+  }
+}

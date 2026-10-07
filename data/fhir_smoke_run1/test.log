@@ -1,0 +1,4 @@
+metadata 200
+{"Patient":{"attempted":3,"created":3,"read_ok":3,"byte_identical_roundtrip":3},"Observation":{"attempted":3,"created":3,"read_ok":3,"byte_identical_roundtrip":3},"DocumentReference":{"attempted":3,"created":3,"read_ok":3,"byte_identical_roundtrip":3},"_validator":{"resources_validated":9,"resources_with_errors":3,"errors":6,"warnings":15,"fhir_version":"4.0.1","terminology":"disabled (-tx n/a)"}}
+[["no token (read)",401,true],["garbage token",401,true],["expired token",401,true],["read scope used for create",403,true],["write scope used for read",403,true],["unknown id",404,true],["wrong type for existing id",404,true],["malformed JSON",400,true],["resourceType mismatch",422,true],["Observation without status",422,true],["unsupported resource type",404,true],["off-chain object tampered (integrity check)",502,true]]
+FHIR SMOKE DONE

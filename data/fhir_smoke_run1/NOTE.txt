@@ -1,0 +1,1 @@
+First smoke run (before fix): HL7 validator reported 3/9 resources with errors. Cause: the test Observation (heart rate) matched the FHIR Vital Signs profile, which requires Observation.category = vital-signs; the generator omitted it. Generator fixed in fhir_test.js; this folder keeps the unmodified first result.
