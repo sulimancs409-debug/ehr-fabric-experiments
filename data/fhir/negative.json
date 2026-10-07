@@ -1,0 +1,74 @@
+[
+  {
+    "case": "no token (read)",
+    "expected": 401,
+    "got": 401,
+    "pass": true
+  },
+  {
+    "case": "garbage token",
+    "expected": 401,
+    "got": 401,
+    "pass": true
+  },
+  {
+    "case": "expired token",
+    "expected": 401,
+    "got": 401,
+    "pass": true
+  },
+  {
+    "case": "read scope used for create",
+    "expected": 403,
+    "got": 403,
+    "pass": true
+  },
+  {
+    "case": "write scope used for read",
+    "expected": 403,
+    "got": 403,
+    "pass": true
+  },
+  {
+    "case": "unknown id",
+    "expected": 404,
+    "got": 404,
+    "pass": true
+  },
+  {
+    "case": "wrong type for existing id",
+    "expected": 404,
+    "got": 404,
+    "pass": true
+  },
+  {
+    "case": "malformed JSON",
+    "expected": 400,
+    "got": 400,
+    "pass": true
+  },
+  {
+    "case": "resourceType mismatch",
+    "expected": 422,
+    "got": 422,
+    "pass": true
+  },
+  {
+    "case": "Observation without status",
+    "expected": 422,
+    "got": 422,
+    "pass": true
+  },
+  {
+    "case": "unsupported resource type",
+    "expected": 404,
+    "got": 404,
+    "pass": true
+  },
+  {
+    "case": "off-chain object tampered (integrity check)",
+    "expected": 502,
+    "got": 502,
+    "pass": true
+  }
+]

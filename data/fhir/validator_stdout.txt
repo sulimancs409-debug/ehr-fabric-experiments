@@ -1,0 +1,256 @@
+FHIR Validation tool Version 7.0.0 (Git# 37795f3f571f). Built 2026-10-06T19:02:34.858Z (10 hours old)
+  Java:   17.0.20.1 from /usr/lib/jvm/temurin-17-jdk-amd64 on amd64 (64bit). 3998MB available
+  Paths:  Current = /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/xc, Package Cache = /home/runner/.fhir/packages
+  Params: /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip -version 4.0.1 -tx n/a -output /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/validator_output.json
+  Locale: /
+  Jurisdiction: None specified (locale = )
+  Note that exceptions and validation failures may happen in the absence of a locale
+Loading
+  Loading FHIR v4.0.1 from hl7.fhir.r4.core#4.0.1
+Installing hl7.fhir.r4.core#4.0.1 to the package cache
+  Fetching:
+
+Installing hl7.fhir.r4.core#4.0.1
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.fhir.r4.core#4.0.1
+Installing hl7.fhir.xver-extensions#0.1.0 to the package cache
+  Fetching:
+
+Installing hl7.fhir.xver-extensions#0.1.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.fhir.xver-extensions#0.1.0
+Installing hl7.terminology.r4#6.2.0 to the package cache
+  Fetching:
+
+Installing hl7.terminology.r4#6.2.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.terminology.r4#6.2.0
+  Load hl7.terminology.r4#6.2.0 - 4288 resources (00:12.554)
+Installing hl7.fhir.uv.extensions.r4#5.2.0 to the package cache
+  Fetching:
+
+Installing hl7.fhir.uv.extensions.r4#5.2.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.fhir.uv.extensions.r4#5.2.0
+  Load hl7.fhir.uv.extensions.r4#5.2.0 - 759 resources (00:02.276)
+  Loaded FHIR - 8265 resources (00:00.000)
+  Terminology Cache at /tmp/default-tx-cache/r4
+  Terminology server null - Version n/a: No Terminology Server (00:00.004)
+Installing hl7.terminology#7.4.0 to the package cache
+  Fetching:
+
+Installing hl7.terminology#7.4.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.terminology#7.4.0
+  Load hl7.terminology#7.4.0 - 4181 resources (00:01.598)
+Installing hl7.fhir.uv.extensions#5.3.0 to the package cache
+  Fetching:
+
+Installing hl7.fhir.uv.extensions#5.3.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.fhir.uv.extensions#5.3.0
+Installing hl7.terminology.r5#7.1.0 to the package cache
+  Fetching:
+
+Installing hl7.terminology.r5#7.1.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.terminology.r5#7.1.0
+Installing hl7.fhir.uv.extensions.r5#5.2.0 to the package cache
+  Fetching:
+
+Installing hl7.fhir.uv.extensions.r5#5.2.0
+ done.
+ loaded @ /home/runner/.fhir/packages/hl7.fhir.uv.extensions.r5#5.2.0
+  Load hl7.fhir.uv.extensions.r5#5.2.0 - 759 resources (00:02.095)
+  Load hl7.terminology.r5#7.1.0 - 4072 resources (00:00.100)
+  Load hl7.fhir.uv.extensions#5.3.0 - 856 resources (00:00.561)
+  Package Summary: [hl7.fhir.r4.core#4.0.1, hl7.fhir.xver-extensions#0.1.0, hl7.terminology.r4#6.2.0, hl7.fhir.uv.extensions.r4#5.2.0, hl7.terminology#7.4.0, hl7.fhir.uv.extensions.r5#5.2.0, hl7.terminology.r5#7.1.0, hl7.fhir.uv.extensions#5.3.0]
+  Get set... 
+  ...go! (00:03.773)
+Cached new session. Cache size = 1
+Sources to validate: /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip
+Validating
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_16.json
+ 00:00.222
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_23.json
+ 00:00.037
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_11.json
+ 00:00.037
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_22.json
+ 00:00.035
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_21.json
+ 00:00.048
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_23.json
+ 00:00.033
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_25.json
+ 00:00.033
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_14.json
+ 00:00.031
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_28.json
+ 00:00.035
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_3.json
+ 00:00.025
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_17.json
+ 00:00.041
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_3.json
+ 00:00.036
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_10.json
+ 00:00.037
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_11.json
+ 00:00.034
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_26.json
+ 00:00.037
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_15.json
+ 00:00.032
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_18.json
+ 00:00.030
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_29.json
+ 00:00.020
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_14.json
+ 00:00.020
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_8.json
+ 00:00.025
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_9.json
+ 00:00.021
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_26.json
+ 00:00.025
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_10.json
+ 00:00.025
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_5.json
+ 00:00.036
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_7.json
+ 00:00.022
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_13.json
+ 00:00.027
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_6.json
+ 00:00.028
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_25.json
+ 00:00.022
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_4.json
+ 00:00.021
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_0.json
+ 00:00.026
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_3.json
+ 00:00.026
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_27.json
+ 00:00.025
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_4.json
+ 00:00.026
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_11.json
+ 00:00.022
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_12.json
+ 00:00.025
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_17.json
+ 00:00.020
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_21.json
+ 00:00.019
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_22.json
+ 00:00.025
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_22.json
+ 00:00.018
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_29.json
+ 00:00.020
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_10.json
+ 00:00.018
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_21.json
+ 00:00.022
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_19.json
+ 00:00.025
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_28.json
+ 00:00.028
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_15.json
+ 00:00.031
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_0.json
+ 00:00.022
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_25.json
+ 00:00.024
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_9.json
+ 00:00.021
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_20.json
+ 00:00.016
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_16.json
+ 00:00.021
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_1.json
+ 00:00.030
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_0.json
+ 00:00.024
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_6.json
+ 00:00.024
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_12.json
+ 00:00.026
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_15.json
+ 00:00.016
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_24.json
+ 00:00.024
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_18.json
+ 00:00.022
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_2.json
+ 00:00.019
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_6.json
+ 00:00.023
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_8.json
+ 00:00.029
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_13.json
+ 00:00.017
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_2.json
+ 00:00.027
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_23.json
+ 00:00.028
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_12.json
+ 00:00.021
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_1.json
+ 00:00.017
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_17.json
+ 00:00.015
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_26.json
+ 00:00.017
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_4.json
+ 00:00.015
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_7.json
+ 00:00.022
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_9.json
+ 00:00.024
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_29.json
+ 00:00.026
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_5.json
+ 00:00.017
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_27.json
+ 00:00.018
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_7.json
+ 00:00.028
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_1.json
+ 00:00.015
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_16.json
+ 00:00.014
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_14.json
+ 00:00.028
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_27.json
+ 00:00.017
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_8.json
+ 00:00.018
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_20.json
+ 00:00.017
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_2.json
+ 00:00.015
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_24.json
+ 00:00.015
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_28.json
+ 00:00.015
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_19.json
+ 00:00.020
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_19.json
+ 00:00.017
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_5.json
+ 00:00.015
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Patient_18.json
+ 00:00.016
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_20.json
+ 00:00.022
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/DocumentReference_13.json
+ 00:00.022
+  Validate /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/results/fhir/roundtrip/Observation_24.json
+ 00:00.021
+Done. Times: Loading: 00:23.046, validation: 00:02.437 (#90). Memory = 986Mb
+
+Done. Times: Loading: 00:23.046, validation: 00:02.437 (#90). Max Memory = 3Gb
+

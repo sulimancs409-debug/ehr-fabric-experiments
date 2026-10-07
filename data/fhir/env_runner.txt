@@ -1,0 +1,5 @@
+mode=full
+runner: 4 vCPU, 15 GB RAM
+docker 28.0.4
+v18.20.8
+openjdk version "17.0.20.1" 2026-08-18

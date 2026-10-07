@@ -11,6 +11,8 @@ Docker 28.0.4, Hyperledger Fabric 2.5.15, Caliper 0.5.0). Nothing was edited, fi
     - `failures.csv` failed transactions with error text
     - `raw_per_tx_logs.tar.gz` per-transaction start/end/ok/error logs and the exact Caliper configs of every round
     - `env_runner.txt` runner hardware and tool versions
-- `xc/`  two-cluster experiment (added when that workflow has run)
+- `xc/`  two-cluster experiment: cross-cluster read latency vs emulated WAN RTT, functional (tamper/unavailable/token) cases, 1 vs 2 cluster scale-out
+- `fhir/` FHIR R4 gateway: HL7 validator result for 90 round-tripped resources, 12 negative/security cases, end-to-end load (10..100 TPS)
+- `fhir_smoke_run1/` first FHIR smoke run kept unmodified (3/9 validator errors, cause in NOTE.txt)
 
 Regenerate every figure:  `python3 scripts/make_figures.py data/final data/xc figures`

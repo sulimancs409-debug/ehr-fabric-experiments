@@ -1,0 +1,50 @@
+{
+ "resourceType": "CapabilityStatement",
+ "status": "active",
+ "date": "2026-10-07",
+ "kind": "instance",
+ "fhirVersion": "4.0.1",
+ "format": [
+  "json"
+ ],
+ "rest": [
+  {
+   "mode": "server",
+   "resource": [
+    {
+     "type": "Patient",
+     "interaction": [
+      {
+       "code": "create"
+      },
+      {
+       "code": "read"
+      }
+     ]
+    },
+    {
+     "type": "Observation",
+     "interaction": [
+      {
+       "code": "create"
+      },
+      {
+       "code": "read"
+      }
+     ]
+    },
+    {
+     "type": "DocumentReference",
+     "interaction": [
+      {
+       "code": "create"
+      },
+      {
+       "code": "read"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
