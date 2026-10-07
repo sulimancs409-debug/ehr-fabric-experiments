@@ -1,0 +1,144 @@
+[0;34mUsing docker and docker compose[0m
+[0;34mdeploying chaincode on channel 'mychannel'[0m
+executing with the following
+- CHANNEL_NAME: [0;32mmychannel[0m
+- CC_NAME: [0;32mehr[0m
+- CC_SRC_PATH: [0;32m/home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/chaincode/ehr[0m
+- CC_SRC_LANGUAGE: [0;32mgo[0m
+- CC_VERSION: [0;32m1.0[0m
+- CC_SEQUENCE: [0;32mauto[0m
+- CC_END_POLICY: [0;32mNA[0m
+- CC_COLL_CONFIG: [0;32mNA[0m
+- CC_INIT_FCN: [0;32mNA[0m
+- DELAY: [0;32m3[0m
+- MAX_RETRY: [0;32m5[0m
+- VERBOSE: [0;32mfalse[0m
+executing with the following
+- CC_NAME: [0;32mehr[0m
+- CC_SRC_PATH: [0;32m/home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/chaincode/ehr[0m
+- CC_SRC_LANGUAGE: [0;32mgo[0m
+- CC_VERSION: [0;32m1.0[0m
+[0;34mVendoring Go dependencies at /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/chaincode/ehr[0m
+~/work/ehr-fabric-experiments/ehr-fabric-experiments/chaincode/ehr ~/ehr-fabric/fabric-samples/test-network
+~/ehr-fabric/fabric-samples/test-network
+[0;32mFinished vendoring Go dependencies[0m
++ '[' false = true ']'
++ peer lifecycle chaincode package ehr.tar.gz --path /home/runner/work/ehr-fabric-experiments/ehr-fabric-experiments/chaincode/ehr --lang golang --label ehr_1.0
++ res=0
+[0;32mChaincode is packaged[0m
+[0;34mInstalling chaincode on peer0.org1...[0m
+[0;34mUsing organization 1[0m
++ peer lifecycle chaincode queryinstalled --output json
++ jq -r 'try (.installed_chaincodes[].package_id)'
++ grep '^ehr_1.0:acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab$'
++ test 1 -ne 0
++ peer lifecycle chaincode install ehr.tar.gz
++ res=0
+[34m2026-10-07 04:51:13.097 UTC 0001 INFO[0m [cli.lifecycle.chaincode] [34;1msubmitInstallProposal[0m -> Installed remotely: response:<status:200 payload:"\nHehr_1.0:acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab\022\007ehr_1.0" > 
+[34m2026-10-07 04:51:13.097 UTC 0002 INFO[0m [cli.lifecycle.chaincode] [34;1msubmitInstallProposal[0m -> Chaincode code package identifier: ehr_1.0:acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab
+[0;32mChaincode is installed on peer0.org1[0m
+[0;34mInstall chaincode on peer0.org2...[0m
+[0;34mUsing organization 2[0m
++ peer lifecycle chaincode queryinstalled --output json
++ jq -r 'try (.installed_chaincodes[].package_id)'
++ grep '^ehr_1.0:acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab$'
++ test 1 -ne 0
++ peer lifecycle chaincode install ehr.tar.gz
++ res=0
+[34m2026-10-07 04:51:41.092 UTC 0001 INFO[0m [cli.lifecycle.chaincode] [34;1msubmitInstallProposal[0m -> Installed remotely: response:<status:200 payload:"\nHehr_1.0:acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab\022\007ehr_1.0" > 
+[34m2026-10-07 04:51:41.092 UTC 0002 INFO[0m [cli.lifecycle.chaincode] [34;1msubmitInstallProposal[0m -> Chaincode code package identifier: ehr_1.0:acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab
+[0;32mChaincode is installed on peer0.org2[0m
+++ peer lifecycle chaincode querycommitted --channelID mychannel --name ehr
+++ sed -n '/Version:/{s/.*Sequence: //; s/, Endorsement Plugin:.*$//; p;}'
+Error: query failed with status: 404 - namespace ehr is not defined
++ COMMITTED_CC_SEQUENCE=
++ res=0
+[0;34mUsing organization 1[0m
++ peer lifecycle chaincode queryinstalled --output json
++ jq -r 'try (.installed_chaincodes[].package_id)'
++ grep '^ehr_1.0:acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab$'
++ res=0
+ehr_1.0:acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab
+[0;32mQuery installed successful on peer0.org1 on channel[0m
+[0;34mUsing organization 1[0m
++ peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile /home/runner/ehr-fabric/fabric-samples/test-network/organizations/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem --channelID mychannel --name ehr --version 1.0 --package-id ehr_1.0:acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab --sequence 1
++ res=0
+[34m2026-10-07 04:51:41.378 UTC 0001 INFO[0m [chaincodeCmd] [34;1mClientWait[0m -> txid [501880086ffd7c74c6f748342ac1c457701112d208418f702f93836e5b539479] committed with status (VALID) at localhost:7051
+[0;32mChaincode definition approved on peer0.org1 on channel 'mychannel'[0m
+[0;34mUsing organization 1[0m
+[0;34mChecking the commit readiness of the chaincode definition on peer0.org1 on channel 'mychannel'...[0m
+[0;34mAttempting to check the commit readiness of the chaincode definition on peer0.org1, Retry after 3 seconds.[0m
++ peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name ehr --version 1.0 --sequence 1 --output json
++ res=0
+{
+	"approvals": {
+		"Org1MSP": true,
+		"Org2MSP": false
+	}
+}
+[0;34mChecking the commit readiness of the chaincode definition successful on peer0.org1 on channel 'mychannel'[0m
+[0;34mUsing organization 2[0m
+[0;34mChecking the commit readiness of the chaincode definition on peer0.org2 on channel 'mychannel'...[0m
+[0;34mAttempting to check the commit readiness of the chaincode definition on peer0.org2, Retry after 3 seconds.[0m
++ peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name ehr --version 1.0 --sequence 1 --output json
++ res=0
+{
+	"approvals": {
+		"Org1MSP": true,
+		"Org2MSP": false
+	}
+}
+[0;34mChecking the commit readiness of the chaincode definition successful on peer0.org2 on channel 'mychannel'[0m
+[0;34mUsing organization 2[0m
++ peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile /home/runner/ehr-fabric/fabric-samples/test-network/organizations/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem --channelID mychannel --name ehr --version 1.0 --package-id ehr_1.0:acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab --sequence 1
++ res=0
+[34m2026-10-07 04:51:47.672 UTC 0001 INFO[0m [chaincodeCmd] [34;1mClientWait[0m -> txid [789ffeef6e2c56a92aa899a86fd570edeac6d003ba11827781b778bc16a76c6f] committed with status (VALID) at localhost:9051
+[0;32mChaincode definition approved on peer0.org2 on channel 'mychannel'[0m
+[0;34mUsing organization 1[0m
+[0;34mChecking the commit readiness of the chaincode definition on peer0.org1 on channel 'mychannel'...[0m
+[0;34mAttempting to check the commit readiness of the chaincode definition on peer0.org1, Retry after 3 seconds.[0m
++ peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name ehr --version 1.0 --sequence 1 --output json
++ res=0
+{
+	"approvals": {
+		"Org1MSP": true,
+		"Org2MSP": true
+	}
+}
+[0;34mChecking the commit readiness of the chaincode definition successful on peer0.org1 on channel 'mychannel'[0m
+[0;34mUsing organization 2[0m
+[0;34mChecking the commit readiness of the chaincode definition on peer0.org2 on channel 'mychannel'...[0m
+[0;34mAttempting to check the commit readiness of the chaincode definition on peer0.org2, Retry after 3 seconds.[0m
++ peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name ehr --version 1.0 --sequence 1 --output json
++ res=0
+{
+	"approvals": {
+		"Org1MSP": true,
+		"Org2MSP": true
+	}
+}
+[0;34mChecking the commit readiness of the chaincode definition successful on peer0.org2 on channel 'mychannel'[0m
+[0;34mUsing organization 1[0m
+[0;34mUsing organization 2[0m
++ peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile /home/runner/ehr-fabric/fabric-samples/test-network/organizations/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem --channelID mychannel --name ehr --peerAddresses localhost:7051 --tlsRootCertFiles /home/runner/ehr-fabric/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem --peerAddresses localhost:9051 --tlsRootCertFiles /home/runner/ehr-fabric/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem --version 1.0 --sequence 1
++ res=0
+[34m2026-10-07 04:51:54.095 UTC 0001 INFO[0m [chaincodeCmd] [34;1mClientWait[0m -> txid [9aa68561b4471373c156f8b588cb22a905184b4a6296309cb7ba3c760dcc5685] committed with status (VALID) at localhost:9051
+[34m2026-10-07 04:51:54.124 UTC 0002 INFO[0m [chaincodeCmd] [34;1mClientWait[0m -> txid [9aa68561b4471373c156f8b588cb22a905184b4a6296309cb7ba3c760dcc5685] committed with status (VALID) at localhost:7051
+[0;32mChaincode definition committed on channel 'mychannel'[0m
+[0;34mUsing organization 1[0m
+[0;34mQuerying chaincode definition on peer0.org1 on channel 'mychannel'...[0m
+[0;34mAttempting to Query committed status on peer0.org1, Retry after 3 seconds.[0m
++ peer lifecycle chaincode querycommitted --channelID mychannel --name ehr
++ res=0
+Committed chaincode definition for chaincode 'ehr' on channel 'mychannel':
+Version: 1.0, Sequence: 1, Endorsement Plugin: escc, Validation Plugin: vscc, Approvals: [Org1MSP: true, Org2MSP: true]
+[0;32mQuery chaincode definition successful on peer0.org1 on channel 'mychannel'[0m
+[0;34mUsing organization 2[0m
+[0;34mQuerying chaincode definition on peer0.org2 on channel 'mychannel'...[0m
+[0;34mAttempting to Query committed status on peer0.org2, Retry after 3 seconds.[0m
++ peer lifecycle chaincode querycommitted --channelID mychannel --name ehr
++ res=0
+Committed chaincode definition for chaincode 'ehr' on channel 'mychannel':
+Version: 1.0, Sequence: 1, Endorsement Plugin: escc, Validation Plugin: vscc, Approvals: [Org1MSP: true, Org2MSP: true]
+[0;32mQuery chaincode definition successful on peer0.org2 on channel 'mychannel'[0m
+[0;34mChaincode initialization is not required[0m

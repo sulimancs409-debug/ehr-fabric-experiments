@@ -1,0 +1,18 @@
+dev-peer0.org2.b.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab Up 23 minutes
+dev-peer0.org1.b.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab Up 23 minutes
+elegant_rhodes Created
+festive_zhukovsky Created
+condescending_gates Created
+compassionate_knuth Created
+peer0.org1.b.example.com Up 24 minutes
+orderer.b.example.com Up 24 minutes
+peer0.org2.b.example.com Up 24 minutes
+dev-peer0.org2.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab Up 24 minutes
+dev-peer0.org1.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab Up 24 minutes
+modest_snyder Created
+competent_saha Created
+jovial_euclid Created
+jolly_khayyam Created
+peer0.org1.example.com Up 26 minutes
+peer0.org2.example.com Up 26 minutes
+orderer.example.com Up 26 minutes

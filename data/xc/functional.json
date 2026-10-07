@@ -1,0 +1,54 @@
+[
+  {
+    "case": "allowed",
+    "n": 50,
+    "allowed": 50,
+    "denied": 0,
+    "reasons": {}
+  },
+  {
+    "case": "tampered_object",
+    "n": 50,
+    "allowed": 0,
+    "denied": 50,
+    "reasons": {
+      "hash-mismatch": 50
+    }
+  },
+  {
+    "case": "object_unavailable",
+    "n": 50,
+    "allowed": 0,
+    "denied": 50,
+    "reasons": {
+      "object-unavailable": 50
+    }
+  },
+  {
+    "case": "token_for_other_record",
+    "n": 50,
+    "allowed": 0,
+    "denied": 50,
+    "reasons": {
+      "token-denied": 50
+    }
+  },
+  {
+    "case": "expired_token",
+    "n": 50,
+    "allowed": 0,
+    "denied": 50,
+    "reasons": {
+      "token-denied": 50
+    }
+  },
+  {
+    "case": "unknown_record",
+    "n": 50,
+    "allowed": 0,
+    "denied": 50,
+    "reasons": {
+      "2 UNKNOWN: evaluate call to endorser returned error: chaincode response 500, rec": 50
+    }
+  }
+]

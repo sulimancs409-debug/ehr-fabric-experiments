@@ -1,0 +1,42 @@
+[0;34mUsing docker and docker compose[0m
+[0;34mStarting nodes with CLI timeout of '5' tries and CLI delay of '3' seconds and using database 'leveldb' with crypto from 'cryptogen'[0m
+[0;34mLOCAL_VERSION=v2.5.15[0m
+[0;34mDOCKER_IMAGE_VERSION=v2.5.15[0m
+/home/runner/ehr-fabric/fabric-samples/test-network/../bin/cryptogen
+[0;34mGenerating certificates using cryptogen tool[0m
+[0;34mCreating Org1 Identities[0m
++ cryptogen generate --config=./organizations/cryptogen/crypto-config-org1.yaml --output=organizations
+org1.example.com
++ res=0
+[0;34mCreating Org2 Identities[0m
++ cryptogen generate --config=./organizations/cryptogen/crypto-config-org2.yaml --output=organizations
+org2.example.com
++ res=0
+[0;34mCreating Orderer Org Identities[0m
++ cryptogen generate --config=./organizations/cryptogen/crypto-config-orderer.yaml --output=organizations
++ res=0
+[0;34mGenerating CCP files for Org1 and Org2[0m
+ Network fabric_test  Creating
+ Network fabric_test  Created
+ Volume "clustera_peer0.org2.example.com"  Creating
+ Volume "clustera_peer0.org2.example.com"  Created
+ Volume "clustera_orderer.example.com"  Creating
+ Volume "clustera_orderer.example.com"  Created
+ Volume "clustera_peer0.org1.example.com"  Creating
+ Volume "clustera_peer0.org1.example.com"  Created
+ Container peer0.org1.example.com  Creating
+ Container peer0.org2.example.com  Creating
+ Container orderer.example.com  Creating
+ Container peer0.org1.example.com  Created
+ Container peer0.org2.example.com  Created
+ Container orderer.example.com  Created
+ Container peer0.org1.example.com  Starting
+ Container peer0.org2.example.com  Starting
+ Container orderer.example.com  Starting
+ Container peer0.org2.example.com  Started
+ Container peer0.org1.example.com  Started
+ Container orderer.example.com  Started
+CONTAINER ID   IMAGE                               COMMAND             CREATED                  STATUS                  PORTS                                                                                                                                   NAMES
+12c03109e402   hyperledger/fabric-peer:latest      "peer node start"   Less than a second ago   Up Less than a second   0.0.0.0:7051->7051/tcp, [::]:7051->7051/tcp, 0.0.0.0:9444->9444/tcp, [::]:9444->9444/tcp                                                peer0.org1.example.com
+084467ee2146   hyperledger/fabric-peer:latest      "peer node start"   Less than a second ago   Up Less than a second   0.0.0.0:9051->9051/tcp, [::]:9051->9051/tcp, 7051/tcp, 0.0.0.0:9445->9445/tcp, [::]:9445->9445/tcp                                      peer0.org2.example.com
+15ce9d17cbfc   hyperledger/fabric-orderer:latest   "orderer"           Less than a second ago   Up Less than a second   0.0.0.0:7050->7050/tcp, [::]:7050->7050/tcp, 0.0.0.0:7053->7053/tcp, [::]:7053->7053/tcp, 0.0.0.0:9443->9443/tcp, [::]:9443->9443/tcp   orderer.example.com

@@ -1,0 +1,5 @@
+mode=full
+runner: 4 vCPU, 15 GB RAM
+docker 28.0.4
+go version go1.22.8 linux/amd64
+v18.20.8

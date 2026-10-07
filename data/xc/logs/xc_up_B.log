@@ -1,0 +1,51 @@
+[0;34mUsing docker and docker compose[0m
+[0;34mStarting nodes with CLI timeout of '5' tries and CLI delay of '3' seconds and using database 'leveldb' with crypto from 'cryptogen'[0m
+[0;34mLOCAL_VERSION=v2.5.15[0m
+[0;34mDOCKER_IMAGE_VERSION=v2.5.15[0m
+/home/runner/ehr-fabric/fabric-samples/test-network-b/../bin/cryptogen
+[0;34mGenerating certificates using cryptogen tool[0m
+[0;34mCreating Org1 Identities[0m
++ cryptogen generate --config=./organizations/cryptogen/crypto-config-org1.yaml --output=organizations
+org1.b.example.com
++ res=0
+[0;34mCreating Org2 Identities[0m
++ cryptogen generate --config=./organizations/cryptogen/crypto-config-org2.yaml --output=organizations
+org2.b.example.com
++ res=0
+[0;34mCreating Orderer Org Identities[0m
++ cryptogen generate --config=./organizations/cryptogen/crypto-config-orderer.yaml --output=organizations
++ res=0
+[0;34mGenerating CCP files for Org1 and Org2[0m
+ Network fabric_test_b  Creating
+ Network fabric_test_b  Created
+ Volume "clusterb_orderer.b.example.com"  Creating
+ Volume "clusterb_orderer.b.example.com"  Created
+ Volume "clusterb_peer0.org1.b.example.com"  Creating
+ Volume "clusterb_peer0.org1.b.example.com"  Created
+ Volume "clusterb_peer0.org2.b.example.com"  Creating
+ Volume "clusterb_peer0.org2.b.example.com"  Created
+ Container peer0.org1.b.example.com  Creating
+ Container peer0.org2.b.example.com  Creating
+ Container orderer.b.example.com  Creating
+ Container peer0.org2.b.example.com  Created
+ Container peer0.org1.b.example.com  Created
+ Container orderer.b.example.com  Created
+ Container peer0.org2.b.example.com  Starting
+ Container orderer.b.example.com  Starting
+ Container peer0.org1.b.example.com  Starting
+ Container peer0.org2.b.example.com  Started
+ Container orderer.b.example.com  Started
+ Container peer0.org1.b.example.com  Started
+CONTAINER ID   IMAGE                                                                                                                                                                  COMMAND                  CREATED              STATUS                  PORTS                                                                                                                                                         NAMES
+b916edc8546c   hyperledger/fabric-peer:latest                                                                                                                                         "peer node start"        1 second ago         Up Less than a second   0.0.0.0:17051->17051/tcp, [::]:17051->17051/tcp, 7051/tcp, 0.0.0.0:19444->19444/tcp, [::]:19444->19444/tcp                                                    peer0.org1.b.example.com
+2f5e9215f12c   hyperledger/fabric-orderer:latest                                                                                                                                      "orderer"                1 second ago         Up Less than a second   0.0.0.0:17050->17050/tcp, [::]:17050->17050/tcp, 0.0.0.0:17053->17053/tcp, [::]:17053->17053/tcp, 7050/tcp, 0.0.0.0:19443->19443/tcp, [::]:19443->19443/tcp   orderer.b.example.com
+40fec87bc849   hyperledger/fabric-peer:latest                                                                                                                                         "peer node start"        1 second ago         Up Less than a second   0.0.0.0:19051->19051/tcp, [::]:19051->19051/tcp, 7051/tcp, 0.0.0.0:19445->19445/tcp, [::]:19445->19445/tcp                                                    peer0.org2.b.example.com
+4173e6d83b81   dev-peer0.org2.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab-d7fec08e36988c7a308d311667f1d6756d4320aebf529c1fc812562502137dfd   "chaincode -peer.add…"   8 seconds ago        Up 7 seconds                                                                                                                                                                          dev-peer0.org2.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab
+79e63c37c216   dev-peer0.org1.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab-dcbe2a2bb2094b3606f9fbe1fe680e772c8a598861ecf5df86fc92e02fe01e4f   "chaincode -peer.add…"   8 seconds ago        Up 7 seconds                                                                                                                                                                          dev-peer0.org1.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab
+059a94091247   219a2c993144                                                                                                                                                           "/bin/sh -c '#(nop) …"   21 seconds ago       Created                                                                                                                                                                               modest_snyder
+0f72eedf45b8   37d5f80885cd                                                                                                                                                           "/bin/sh -c '#(nop) …"   22 seconds ago       Created                                                                                                                                                                               competent_saha
+7ec348cb7b95   64e50ebd3349                                                                                                                                                           "/bin/sh -c '#(nop) …"   49 seconds ago       Created                                                                                                                                                                               jovial_euclid
+99dfcfa5e6a3   9e8013e3e4ad                                                                                                                                                           "/bin/sh -c '#(nop) …"   50 seconds ago       Created                                                                                                                                                                               jolly_khayyam
+12c03109e402   hyperledger/fabric-peer:latest                                                                                                                                         "peer node start"        About a minute ago   Up About a minute       0.0.0.0:7051->7051/tcp, [::]:7051->7051/tcp, 0.0.0.0:9444->9444/tcp, [::]:9444->9444/tcp                                                                      peer0.org1.example.com
+084467ee2146   hyperledger/fabric-peer:latest                                                                                                                                         "peer node start"        About a minute ago   Up About a minute       0.0.0.0:9051->9051/tcp, [::]:9051->9051/tcp, 7051/tcp, 0.0.0.0:9445->9445/tcp, [::]:9445->9445/tcp                                                            peer0.org2.example.com
+15ce9d17cbfc   hyperledger/fabric-orderer:latest                                                                                                                                      "orderer"                About a minute ago   Up About a minute       0.0.0.0:7050->7050/tcp, [::]:7050->7050/tcp, 0.0.0.0:7053->7053/tcp, [::]:7053->7053/tcp, 0.0.0.0:9443->9443/tcp, [::]:9443->9443/tcp                         orderer.example.com

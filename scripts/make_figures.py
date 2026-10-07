@@ -98,5 +98,5 @@ if xc and os.path.exists(f"{xc}/summary.csv"):
             d = sc[sc.phase == ph].groupby("rate"); mu, sd = d.tps.mean(), d.tps.std().fillna(0)
             ax[0].errorbar(mu.index, mu.values, yerr=sd.values, color=C[i], marker="o", capsize=2, label=lab)
             q = d.p95_ms.mean(); ax[1].plot(q.index, q.values, color=C[i], marker="o", label=lab)
-        ax[0].set(xlabel="Offered write rate per cluster (TPS)", ylabel="Achieved write TPS"); ax[1].set(xlabel="Offered write rate per cluster (TPS)", ylabel="Write latency P95 (ms)")
+        ax[0].set(xlabel="Offered write rate per cluster (TPS)", ylabel="Achieved write TPS"); ax[1].set(xlabel="Offered write rate per cluster (TPS)", ylabel="Write latency P95 (ms, log scale)", yscale="log"); ax[1].set_yticks([100, 1000, 10000, 50000]); ax[1].set_yticklabels(["100", "1,000", "10,000", "50,000"]); ax[1].minorticks_off()
         ax[0].legend(fontsize=7); save(fig, "fig_scale_out")

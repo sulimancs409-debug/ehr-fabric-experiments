@@ -1,0 +1,10 @@
+dev-peer0.org1.b.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab	dev-peer0.org1.b.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab-ac9cc87632b0510a6265a921672106395b1bd550273325c1847806935e27ad5f
+dev-peer0.org1.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab	dev-peer0.org1.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab-dcbe2a2bb2094b3606f9fbe1fe680e772c8a598861ecf5df86fc92e02fe01e4f
+dev-peer0.org2.b.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab	dev-peer0.org2.b.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab-7b2cb6096611fcbad6b9d86f219751e0a1d88eef3c111735cde9acaef4038750
+dev-peer0.org2.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab	dev-peer0.org2.example.com-ehr_1.0-acb739a542c9c2ca74ee7c197dce448d6c50997d8a028c118203d77e4ed2a9ab-d7fec08e36988c7a308d311667f1d6756d4320aebf529c1fc812562502137dfd
+orderer.b.example.com	hyperledger/fabric-orderer:latest
+orderer.example.com	hyperledger/fabric-orderer:latest
+peer0.org1.b.example.com	hyperledger/fabric-peer:latest
+peer0.org1.example.com	hyperledger/fabric-peer:latest
+peer0.org2.b.example.com	hyperledger/fabric-peer:latest
+peer0.org2.example.com	hyperledger/fabric-peer:latest
