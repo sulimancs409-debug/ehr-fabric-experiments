@@ -1,0 +1,62 @@
+name: fabric-ehr-fhir
+# FHIR R4 gateway in front of one Fabric cluster: conformance (HL7 validator), negative tests, end-to-end load.
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "smoke or full"
+        default: smoke
+        type: choice
+        options: [smoke, full]
+jobs:
+  run:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: "1.22.8", cache: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: "18" }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: "17" }
+      - name: Install Fabric 2.5.15 (pinned fabric-samples)
+        run: |
+          mkdir -p $HOME/ehr-fabric && cd $HOME/ehr-fabric
+          git clone https://github.com/hyperledger/fabric-samples.git
+          (cd fabric-samples && git checkout 5789681b4f4d24e58fa40f19a69f5496892374b6)
+          curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh
+          chmod +x install-fabric.sh
+          ./install-fabric.sh --fabric-version 2.5.15 docker binary
+          cp -r bin config fabric-samples/ 2>/dev/null || true
+          ln -s "$GITHUB_WORKSPACE" $HOME/ehr-kit
+      - name: Prepare
+        run: |
+          (cd chaincode/ehr && go mod tidy)
+          (cd xc && npm install --no-audit --no-fund)
+          curl -sSL -o validator_cli.jar https://github.com/hapifhir/org.hl7.fhir.core/releases/latest/download/validator_cli.jar
+          ls -l validator_cli.jar; java -jar validator_cli.jar -version 2>&1 | head -3 || true
+          sudo apt-get install -y gettext-base jq >/dev/null
+          { echo "mode=${{ inputs.mode }}"; echo "runner: $(nproc) vCPU, $(free -g | awk '/Mem/{print $2}') GB RAM"; docker version --format 'docker {{.Server.Version}}'; node -v; java -version 2>&1 | head -1; } | tee env_runner.txt
+      - name: Bring up cluster A only
+        run: ONLY_A=1 ./xc/clusters.sh up
+      - name: Run gateway and tests
+        run: |
+          mkdir -p results/fhir
+          export FS_DIR=$HOME/ehr-fabric/fabric-samples OUT_DIR=$PWD/results/fhir MODE=${{ inputs.mode }} FHIR_TEST_MODE=1 VALIDATOR_JAR=$PWD/validator_cli.jar
+          (cd xc && node fhir/gateway.js > ../results/fhir/gateway.log 2>&1 &) 
+          sleep 3
+          (cd xc && node fhir/fhir_test.js) 2>&1 | tee results/fhir/test.log
+      - name: Collect logs
+        if: always()
+        run: mkdir -p results/fhir/logs; cp /tmp/xc_*.log results/fhir/logs/ 2>/dev/null || true
+      - name: Tear down
+        if: always()
+        run: ONLY_A=1 ./xc/clusters.sh down || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fhir-${{ inputs.mode }}
+          path: |
+            results/
+            env_runner.txt

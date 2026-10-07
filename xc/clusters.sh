@@ -47,7 +47,7 @@ case "${1:-up}" in
     make_b
     tune "$A"; tune "$B"
     bring_up "$A" clustera A || exit 1
-    bring_up "$B" clusterb B || exit 1
+    [ "${ONLY_A:-0}" = 1 ] || bring_up "$B" clusterb B || exit 1
     docker ps --format '{{.Names}}\t{{.Image}}' | sort | tee /tmp/xc_containers.txt
     ;;
   down)
