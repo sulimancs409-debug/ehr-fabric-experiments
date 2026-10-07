@@ -1,0 +1,2 @@
+{ "name": "ehr-xc", "version": "1.0.0", "private": true,
+  "dependencies": { "@hyperledger/fabric-gateway": "1.5.0", "@grpc/grpc-js": "1.10.8" } }

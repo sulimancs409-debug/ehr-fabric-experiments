@@ -60,6 +60,34 @@ func (c *EHRContract) ReadRecord(ctx contractapi.TransactionContextInterface, id
 	return &a, nil
 }
 
+// CrossRef is written on the REQUESTING cluster after a bridge has fetched and verified an
+// anchor that lives on another cluster. It is the audit trail of the cross-cluster read.
+type CrossRef struct {
+	ID             string `json:"id"`
+	SourceCluster  string `json:"sourceCluster"`
+	SourceRecordID string `json:"sourceRecordId"`
+	SourceHash     string `json:"sourceHash"`
+	VerifiedAt     string `json:"verifiedAt"`
+	Requester      string `json:"requester"`
+}
+
+// CreateCrossRef records a verified cross-cluster access on the local ledger.
+func (c *EHRContract) CreateCrossRef(ctx contractapi.TransactionContextInterface,
+	id, sourceCluster, sourceRecordID, sourceHash, verifiedAt, requester string) error {
+	existing, err := ctx.GetStub().GetState(id)
+	if err != nil {
+		return fmt.Errorf("read failed: %v", err)
+	}
+	if existing != nil {
+		return fmt.Errorf("crossref %s already exists", id)
+	}
+	b, err := json.Marshal(CrossRef{id, sourceCluster, sourceRecordID, sourceHash, verifiedAt, requester})
+	if err != nil {
+		return err
+	}
+	return ctx.GetStub().PutState(id, b)
+}
+
 func main() {
 	cc, err := contractapi.NewChaincode(&EHRContract{})
 	if err != nil {

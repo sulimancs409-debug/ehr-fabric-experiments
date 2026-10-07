@@ -1,0 +1,62 @@
+name: fabric-ehr-crosscluster
+# Two independent Fabric clusters (A, B) on one runner + bridge + emulated WAN + scale-out test.
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "smoke (quick check) or full"
+        default: smoke
+        type: choice
+        options: [smoke, full]
+jobs:
+  run:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: "1.22.8", cache: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: "18" }
+      - name: Install Fabric 2.5.15 (pinned fabric-samples)
+        run: |
+          mkdir -p $HOME/ehr-fabric && cd $HOME/ehr-fabric
+          git clone https://github.com/hyperledger/fabric-samples.git
+          (cd fabric-samples && git checkout 5789681b4f4d24e58fa40f19a69f5496892374b6)
+          curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh
+          chmod +x install-fabric.sh
+          ./install-fabric.sh --fabric-version 2.5.15 docker binary
+          cp -r bin config fabric-samples/ 2>/dev/null || true
+          fabric-samples/bin/peer version | head -3
+          ln -s "$GITHUB_WORKSPACE" $HOME/ehr-kit
+      - name: Prepare chaincode and bridge
+        run: |
+          (cd chaincode/ehr && go mod tidy)
+          (cd xc && npm install --no-audit --no-fund)
+          sudo apt-get install -y gettext-base jq >/dev/null
+      - name: Record environment
+        run: |
+          { echo "mode=${{ inputs.mode }}"; echo "runner: $(nproc) vCPU, $(free -g | awk '/Mem/{print $2}') GB RAM"; docker version --format 'docker {{.Server.Version}}'; go version; node -v; } | tee env_runner.txt
+      - name: Bring up cluster A and cluster B
+        run: ./xc/clusters.sh up
+      - name: Run bridge benchmark
+        run: |
+          mkdir -p results/xc
+          export FS_DIR=$HOME/ehr-fabric/fabric-samples OUT_DIR=$PWD/results/xc MODE=${{ inputs.mode }}
+          (cd xc && node bench.js) 2>&1 | tee results/xc/bench.log
+      - name: Collect logs
+        if: always()
+        run: |
+          mkdir -p results/xc/logs; cp /tmp/xc_*.log /tmp/xc_containers.txt results/xc/logs/ 2>/dev/null || true
+          docker ps -a --format '{{.Names}} {{.Status}}' > results/xc/logs/docker_ps.txt || true
+          for c in orderer.example.com orderer.b.example.com; do docker logs --tail 50 $c > results/xc/logs/$c.log 2>&1 || true; done
+      - name: Tear down
+        if: always()
+        run: ./xc/clusters.sh down || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: crosscluster-${{ inputs.mode }}
+          path: |
+            results/
+            env_runner.txt
