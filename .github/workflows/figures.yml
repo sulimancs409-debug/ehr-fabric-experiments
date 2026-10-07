@@ -1,0 +1,14 @@
+name: figures
+on:
+  workflow_dispatch:
+  push:
+    paths: ["data/**", "scripts/make_figures.py"]
+jobs:
+  figs:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pandas matplotlib numpy
+      - run: python3 scripts/make_figures.py data/final data/xc figures
+      - uses: actions/upload-artifact@v4
+        with: { name: figures, path: figures/ }
