@@ -13,7 +13,7 @@ C = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100"]
 INK, MUTED, GRID = "#0b0b0b", "#52514e", "#e4e3df"
 plt.rcParams.update({"font.size": 9, "axes.edgecolor": MUTED, "axes.labelcolor": INK, "xtick.color": MUTED, "ytick.color": MUTED,
     "axes.spines.top": False, "axes.spines.right": False, "axes.grid": True, "grid.color": GRID, "grid.linewidth": .6,
-    "axes.axisbelow": True, "legend.frameon": False, "lines.linewidth": 2, "lines.markersize": 5, "figure.dpi": 150, "figure.constrained_layout.use": True, "savefig.bbox": "tight"})
+    "axes.axisbelow": True, "legend.frameon": False, "lines.linewidth": 2, "lines.markersize": 5, "figure.dpi": 150, "savefig.dpi": 600, "pdf.fonttype": 42, "svg.fonttype": "none", "figure.constrained_layout.use": True, "savefig.bbox": "tight"})
 
 final = sys.argv[1]; xc = sys.argv[2] if len(sys.argv) > 2 else None; out = sys.argv[3] if len(sys.argv) > 3 else "figures"
 os.makedirs(out, exist_ok=True)
@@ -30,13 +30,14 @@ def load(name, fname="summary.csv"):
     b = _read(run2, name, fname) if os.path.isdir(run2) else None
     if a is None or b is None or fname != "summary.csv": return a if b is None or fname != "summary.csv" else b
     key = ["block", "clients", "op"]; m = a.merge(b, on=key, suffixes=("_1", "_2")); o = m[key].copy()
-    for c in [c for c in a.columns if c.endswith("_mean") and c.replace("_mean", "_sd") in a.columns]:
-        sd = c.replace("_mean", "_sd"); m1, m2 = m[c + "_1"], m[c + "_2"]
+    sdn = lambda c: c[:-5] + "_sd"
+    for c in [c for c in a.columns if c.endswith("_mean") and sdn(c) in a.columns]:
+        sd = sdn(c); m1, m2 = m[c + "_1"], m[c + "_2"]
         o[c] = (m1 + m2) / 2; o[sd] = np.sqrt(((m[sd + "_1"] ** 2 + m[sd + "_2"] ** 2) / 2) + ((m1 - m2) / 2) ** 2)
     o["total_failed_tx"] = m["total_failed_tx_1"] + m["total_failed_tx_2"]; o["n_reps"] = m["n_reps_1"] + m["n_reps_2"]
     return o
 def save(fig, n):
-    for ext in ("png", "pdf"): fig.savefig(f"{out}/{n}.{ext}")
+    for ext in ("png", "pdf", "svg"): fig.savefig(f"{out}/{n}.{ext}")
     plt.close(fig); print("wrote", n)
 
 LAB = {"ldb_maj_100ms_b100": "LevelDB, both orgs endorse", "ldb_any_100ms_b100": "LevelDB, 1-of-2 endorse", "couch_maj_100ms_b100": "CouchDB, both orgs endorse"}
@@ -113,3 +114,13 @@ if xc and os.path.exists(f"{xc}/summary.csv"):
             q = d.p95_ms.mean(); ax[1].plot(q.index, q.values, color=C[i], marker="o", label=lab)
         ax[0].set(xlabel="Offered write rate per cluster (TPS)", ylabel="Achieved write TPS"); ax[1].set(xlabel="Offered write rate per cluster (TPS)", ylabel="Write latency P95 (ms, log scale)", yscale="log"); ax[1].set_yticks([100, 1000, 10000, 50000]); ax[1].set_yticklabels(["100", "1,000", "10,000", "50,000"]); ax[1].minorticks_off()
         ax[0].legend(fontsize=7); save(fig, "fig_scale_out")
+
+# ---- FHIR gateway load (end to end through the HTTP gateway) ----
+fh = os.path.join(os.path.dirname(final.rstrip("/")), "fhir", "summary.csv")
+if os.path.exists(fh):
+    f = pd.read_csv(fh); fig, ax = plt.subplots(1, 2, figsize=(6.8, 2.6))
+    for i, ph in enumerate(["create", "read"]):
+        d = f[f.phase == ph].groupby("rate"); mu = d[["p50_ms", "p95_ms", "p99_ms"]].mean()
+        ax[i].plot(mu.index, mu.p50_ms, color=C[0], marker="o", label="P50"); ax[i].plot(mu.index, mu.p95_ms, color=C[1], marker="s", label="P95"); ax[i].plot(mu.index, mu.p99_ms, color=C[2], marker="^", label="P99")
+        ax[i].set(xlabel="Offered request rate (req/s)", ylabel="Latency (ms)", title=f"FHIR {ph} (POST)" if ph == "create" else "FHIR read (GET)", ylim=(0, None)); ax[i].legend(fontsize=7)
+    save(fig, "fig_fhir_gateway_latency")
