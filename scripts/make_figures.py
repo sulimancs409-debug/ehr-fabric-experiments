@@ -52,7 +52,7 @@ for i, (n, lab) in enumerate(LAB.items()):
     have = True; series(a1, df, "write", "tps_mean", "tps_sd", C[i], lab); series(a2, df, "write", "lat_p95_mean", "lat_p95_sd", C[i], lab)
 if have:
     lim = max(a1.get_xlim()); a1.plot([0, lim], [0, lim], color=MUTED, lw=1, ls=":", label="ideal (achieved = offered)")
-    a1.set(xlabel="Offered load (TPS)", ylabel="Achieved write TPS"); a1.legend(fontsize=7, loc="lower right"); save(fig1, "fig_write_throughput")
+    a1.set(xlabel="Offered load (TPS)", ylabel="Achieved write TPS"); a1.legend(fontsize=7, loc="upper left"); save(fig1, "fig_write_throughput")
     a2.set(xlabel="Offered load (TPS)", ylabel="Write latency P95 (ms)"); a2.legend(fontsize=7); save(fig2, "fig_write_latency_p95")
 
 # F3: block-size factor (MaxMessageCount) on write TPS and P95, LevelDB + both orgs
