@@ -1,0 +1,38 @@
+{
+ "couch_maj_100ms_b100": {
+  "transactions": 515751,
+  "failed": 66,
+  "failed_in_first_second_of_a_worker": 66,
+  "log_lines_no_endorsement_plan_available": 66
+ },
+ "ldb_any_100ms_b100": {
+  "transactions": 685549,
+  "failed": 56,
+  "failed_in_first_second_of_a_worker": 56,
+  "log_lines_no_endorsement_plan_available": 56
+ },
+ "ldb_maj_100ms_b10": {
+  "transactions": 594347,
+  "failed": 60,
+  "failed_in_first_second_of_a_worker": 60,
+  "log_lines_no_endorsement_plan_available": 56
+ },
+ "ldb_maj_100ms_b100": {
+  "transactions": 575449,
+  "failed": 60,
+  "failed_in_first_second_of_a_worker": 60,
+  "log_lines_no_endorsement_plan_available": 60
+ },
+ "ldb_maj_100ms_b250": {
+  "transactions": 640953,
+  "failed": 55,
+  "failed_in_first_second_of_a_worker": 55,
+  "log_lines_no_endorsement_plan_available": 55
+ },
+ "ldb_maj_100ms_b50": {
+  "transactions": 574414,
+  "failed": 62,
+  "failed_in_first_second_of_a_worker": 62,
+  "log_lines_no_endorsement_plan_available": 62
+ }
+}

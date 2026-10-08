@@ -18,10 +18,23 @@ plt.rcParams.update({"font.size": 9, "axes.edgecolor": MUTED, "axes.labelcolor":
 final = sys.argv[1]; xc = sys.argv[2] if len(sys.argv) > 2 else None; out = sys.argv[3] if len(sys.argv) > 3 else "figures"
 os.makedirs(out, exist_ok=True)
 
-def load(name, fname="summary.csv"):
-    for p in (f"{final}/{name}/results/{name}/{fname}", f"{final}/{name}/{fname}", f"{final}/{name}/results/{fname}"):
+def _read(root, name, fname):
+    for p in (f"{root}/{name}/results/{name}/{fname}", f"{root}/{name}/{fname}", f"{root}/{name}/results/{fname}"):
         if os.path.exists(p): return pd.read_csv(p)
     return None
+def load(name, fname="summary.csv"):
+    """Pool independent runner instances: <final> and its sibling <final>_run2 (same configs, different VM).
+    Pooled mean = mean of run means; pooled SD = sqrt(mean(within-run var) + var(run means)), i.e. it includes run-to-run (VM) variance."""
+    a = _read(final, name, fname)
+    run2 = final.rstrip("/") + "_run2"
+    b = _read(run2, name, fname) if os.path.isdir(run2) else None
+    if a is None or b is None or fname != "summary.csv": return a if b is None or fname != "summary.csv" else b
+    key = ["block", "clients", "op"]; m = a.merge(b, on=key, suffixes=("_1", "_2")); o = m[key].copy()
+    for c in [c for c in a.columns if c.endswith("_mean") and c.replace("_mean", "_sd") in a.columns]:
+        sd = c.replace("_mean", "_sd"); m1, m2 = m[c + "_1"], m[c + "_2"]
+        o[c] = (m1 + m2) / 2; o[sd] = np.sqrt(((m[sd + "_1"] ** 2 + m[sd + "_2"] ** 2) / 2) + ((m1 - m2) / 2) ** 2)
+    o["total_failed_tx"] = m["total_failed_tx_1"] + m["total_failed_tx_2"]; o["n_reps"] = m["n_reps_1"] + m["n_reps_2"]
+    return o
 def save(fig, n):
     for ext in ("png", "pdf"): fig.savefig(f"{out}/{n}.{ext}")
     plt.close(fig); print("wrote", n)

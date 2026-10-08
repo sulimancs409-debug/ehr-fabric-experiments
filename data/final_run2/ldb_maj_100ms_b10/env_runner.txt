@@ -1,0 +1,6 @@
+config: ldb_maj_100ms_b10
+state_db=leveldb endorse_policy='' batch_timeout=100ms
+runner: 4 vCPU, 15 GB RAM
+docker 28.0.4
+go version go1.22.8 linux/amd64
+v18.20.8

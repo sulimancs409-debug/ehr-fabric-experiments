@@ -1,0 +1,19 @@
+config,offered_tps,achieved_write_tps_mean_sd,p50_ms,p95_ms,p99_ms,success_pct,n_reps
+"LevelDB, both orgs endorse (default policy)",100,100 ± 0,93,142,149,99.99,6
+"LevelDB, both orgs endorse (default policy)",200,195 ± 6,169,245,284,99.97,6
+"LevelDB, both orgs endorse (default policy)",300,194 ± 6,174,254,298,99.97,6
+"LevelDB, both orgs endorse (default policy)",400,196 ± 5,174,255,298,99.97,6
+"LevelDB, both orgs endorse (default policy)",500,196 ± 3,174,252,295,99.96,6
+"LevelDB, both orgs endorse (default policy)",600,196 ± 4,174,256,298,99.97,6
+"LevelDB, 1-of-2 endorse",100,100 ± 0,70,116,120,100.00,6
+"LevelDB, 1-of-2 endorse",200,200 ± 0,75,122,130,99.98,6
+"LevelDB, 1-of-2 endorse",300,300 ± 0,89,138,155,99.99,6
+"LevelDB, 1-of-2 endorse",400,385 ± 14,114,172,206,99.98,6
+"LevelDB, 1-of-2 endorse",500,409 ± 41,127,188,227,99.98,6
+"LevelDB, 1-of-2 endorse",600,407 ± 41,126,182,209,99.98,6
+"CouchDB, both orgs endorse",100,100 ± 0,152,536,604,99.98,6
+"CouchDB, both orgs endorse",200,123 ± 6,6116,11087,11536,99.95,6
+"CouchDB, both orgs endorse",300,124 ± 1,6135,11238,11656,99.95,6
+"CouchDB, both orgs endorse",400,122 ± 5,6140,11529,12058,99.95,6
+"CouchDB, both orgs endorse",500,123 ± 5,6230,11385,11830,99.94,6
+"CouchDB, both orgs endorse",600,123 ± 1,6734,12293,12794,99.95,6
